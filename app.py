@@ -79,6 +79,19 @@ def validate_course_data(data):
 # ==========================================
 
 
+# GET / - Serve the frontend (index.html)
+@app.route("/")
+def serve_frontend():
+    try:
+        with open("index.html", "r", encoding="utf-8") as f:
+            content = f.read()
+        return content, 200, {"Content-Type": "text/html; charset=utf-8"}
+    except FileNotFoundError:
+        return "Frontend not found", 404
+    except Exception as e:
+        return f"Error loading frontend: {str(e)}", 500
+
+
 # GET /api/courses - Retrieve all courses
 @app.route("/api/courses", methods=["GET"])
 def get_all_courses():
